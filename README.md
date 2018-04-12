@@ -11,5 +11,7 @@ Mobile Application Development
 ## Coding Style Guidlines
 [Google Android](https://source.android.com/setup/contribute/code-style)
 
+- Use [Optional](http://www.baeldung.com/java-optional) instead of return null
+
 ## Design Guidelines
 [Google Material Design](https://material.io/guidelines/material-design/introduction.html)
