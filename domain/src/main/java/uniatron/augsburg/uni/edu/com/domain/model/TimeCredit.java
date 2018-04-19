@@ -3,22 +3,18 @@ package uniatron.augsburg.uni.edu.com.domain.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
 
 import java.util.Date;
 
-import uniatron.augsburg.uni.edu.com.domain.converter.DateConverter;
-
 @Entity
-@TypeConverters({DateConverter.class})
-public class StepCount {
+public class TimeCredit {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;
     @ColumnInfo(name = "timestamp")
     private Date timestamp;
-    @ColumnInfo(name = "step_count")
-    private int stepCount;
+    @ColumnInfo(name = "time_in_minutes")
+    private int timeInMinutes;
 
     public int getId() {
         return id;
@@ -36,11 +32,11 @@ public class StepCount {
         this.timestamp = timestamp;
     }
 
-    public int getStepCount() {
-        return stepCount;
+    public int getTimeInMinutes() {
+        return timeInMinutes;
     }
 
-    public void setStepCount(int stepCount) {
-        this.stepCount = stepCount;
+    public void setTimeInMinutes(int timeInMinutes) {
+        this.timeInMinutes = timeInMinutes;
     }
 }

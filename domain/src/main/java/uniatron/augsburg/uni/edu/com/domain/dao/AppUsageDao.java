@@ -15,9 +15,20 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
 public interface AppUsageDao {
+    /**
+     * Persist an app usage.
+     *
+     * @param appUsage The app usage to persist.
+     */
     @Insert(onConflict = REPLACE)
     void add(@NonNull AppUsage appUsage);
 
+    /**
+     * Query all app usages over time since the date.
+     *
+     * @param date The date to query since.
+     * @return the app usages.
+     */
     @Query("SELECT * FROM AppUsage WHERE AppUsage.timestamp >= :date")
     LiveData<List<AppUsage>> loadSince(@NonNull Date date);
 }

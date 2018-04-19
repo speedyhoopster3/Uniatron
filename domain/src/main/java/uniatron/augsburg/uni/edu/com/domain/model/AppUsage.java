@@ -4,10 +4,14 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
 import java.util.Date;
 
+import uniatron.augsburg.uni.edu.com.domain.converter.DateConverter;
+
 @Entity(indices = {@Index("app_name")})
+@TypeConverters({DateConverter.class})
 public class AppUsage {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

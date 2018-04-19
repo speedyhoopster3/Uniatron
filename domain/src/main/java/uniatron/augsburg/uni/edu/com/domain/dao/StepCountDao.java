@@ -15,9 +15,20 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
 public interface StepCountDao {
+    /**
+     * Persist a step count.
+     *
+     * @param stepCount The step count to persist.
+     */
     @Insert(onConflict = REPLACE)
     void add(@NonNull StepCount stepCount);
 
+    /**
+     * Query all the step counts over time since the date.
+     *
+     * @param date The date to query since.
+     * @return the step counts.
+     */
     @Query("SELECT * FROM StepCount WHERE StepCount.timestamp >= :date")
     LiveData<List<StepCount>> loadSince(@NonNull Date date);
 }
