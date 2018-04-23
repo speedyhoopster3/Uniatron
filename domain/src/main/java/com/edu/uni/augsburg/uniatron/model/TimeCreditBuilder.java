@@ -4,7 +4,7 @@ import com.edu.uni.augsburg.uniatron.domain.model.TimeCreditEntity;
 
 import java.util.Date;
 
-public enum TimeCredits {
+public enum TimeCreditBuilder {
     CREDIT_10000(() -> {
         final TimeCreditEntity timeCreditEntity = new TimeCreditEntity();
         timeCreditEntity.setTimeInMinutes(Constants.STEPS_10000_TIME_IN_MINUTES);
@@ -44,7 +44,7 @@ public enum TimeCredits {
 
     private final TimeCreditSupplier supplier;
 
-    TimeCredits(TimeCreditSupplier supplier) {
+    TimeCreditBuilder(TimeCreditSupplier supplier) {
         this.supplier = supplier;
     }
 
@@ -53,13 +53,13 @@ public enum TimeCredits {
      *
      * @return The time credit.
      */
-    public TimeCredit build() {
+    public TimeCreditEntity build() {
         return supplier.get();
     }
 
     @FunctionalInterface
     private interface TimeCreditSupplier {
-        TimeCredit get();
+        TimeCreditEntity get();
     }
 
     private static final class Constants {

@@ -23,6 +23,7 @@ staticAnalysis {
         excludeFilter rootProject.file('tools/findbugs.xml')
         includeVariants { variant -> variant.name.contains('debug') }
     }
+    lint { }
 }
 
 afterEvaluate {

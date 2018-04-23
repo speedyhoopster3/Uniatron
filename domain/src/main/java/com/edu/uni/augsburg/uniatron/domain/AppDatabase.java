@@ -48,15 +48,13 @@ public abstract class AppDatabase extends RoomDatabase {
      * @return the app database.
      */
     public static AppDatabase getInstance(@NonNull final Context context) {
-        if (sInstance == null) {
-            synchronized (AppDatabase.class) {
-                if (sInstance == null) {
-                    sInstance = Room.databaseBuilder(
-                            context.getApplicationContext(),
-                            AppDatabase.class,
-                            "uniatron")
-                            .build();
-                }
+        synchronized (AppDatabase.class) {
+            if (sInstance == null) {
+                sInstance = Room.databaseBuilder(
+                        context.getApplicationContext(),
+                        AppDatabase.class,
+                        "uniatron")
+                        .build();
             }
         }
         return sInstance;
