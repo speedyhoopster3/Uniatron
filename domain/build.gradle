@@ -1,8 +1,9 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.static-analysis'
 
 android {
     compileSdkVersion 27
-
+    buildToolsVersion '27.0.3'
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 27
@@ -11,27 +12,64 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+    staticAnalysis {
+        penalty failOnWarnings
+        checkstyle {
+            exclude project.fileTree('src/test/java')
+            configFile rootProject.file('tools/checkstyle.xml')
+        }
+        pmd {
+            exclude project.fileTree('src/test/java')
+            //ruleSetFiles rootProject.files('tools/pmd.xml')
+        }
+        findbugs {
+            exclude project.fileTree('src/test/java')
+            excludeFilter rootProject.file('tools/findbugs.xml')
+        }
+        detekt { }
+        lintOptions { }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+/*
+task checkers { task ->
+    task.dependsOn(checkstyleDebug, findbugsDebug, pmdDebug)
+}
 
-    implementation "android.arch.lifecycle:viewmodel:1.1.1"
+check.dependsOn(checkers)
+*/
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+
+    // Architecture
+    implementation "android.arch.paging:runtime:1.0.0-rc1"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    testImplementation "android.arch.core:core-testing:1.1.1"
+
+    // Room - Persistency
     implementation "android.arch.persistence.room:runtime:1.0.0"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     testImplementation "android.arch.persistence.room:testing:1.0.0"
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    // Testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
