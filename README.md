@@ -1,6 +1,8 @@
 # Uniatron
 Mobile Application Development
 
+[![Build Status](https://travis-ci.org/FHellmann/Uniatron.svg?branch=master)](https://travis-ci.org/FHellmann/Uniatron)
+
 ## Work Guidelines
 1. Create Issue
 2. Create Branch (Naming: {first letter of first name + last name}-{issue nr})
