@@ -11,8 +11,6 @@ Severity: HARD
 
     <description>POM rule set file</description>
 
-    <exclude-pattern>.*/test-output/.*</exclude-pattern>
-
     <rule ref="rulesets/java/android.xml" />
 
     <rule ref="rulesets/java/basic.xml" />
@@ -70,14 +68,6 @@ Severity: HARD
     <rule ref="rulesets/java/imports.xml" />
 
     <rule ref="rulesets/java/junit.xml" />
-
-    <rule ref="rulesets/java/logging-jakarta-commons.xml">
-        <exclude name="GuardLogStatement" />
-    </rule>
-
-    <rule ref="rulesets/java/logging-java.xml">
-        <exclude name="GuardLogStatementJavaUtil" />
-    </rule>
 
     <rule ref="rulesets/java/migrating.xml" />
 

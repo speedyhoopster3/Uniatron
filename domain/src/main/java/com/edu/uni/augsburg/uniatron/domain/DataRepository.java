@@ -1,6 +1,6 @@
 package com.edu.uni.augsburg.uniatron.domain;
 
-public class DataRepository {
+public final class DataRepository {
 
     private static DataRepository sInstance;
     private final AppDatabase mDatabase;

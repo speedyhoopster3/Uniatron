@@ -29,8 +29,8 @@ public interface TimeCreditDao {
      *
      * @return the remaining time credits.
      */
-    @Query("SELECT SUM(TimeCreditEntity.time_in_minutes) FROM TimeCreditEntity " +
-            "WHERE date(TimeCreditEntity.timestamp) >= date('now')")
+    @Query("SELECT SUM(TimeCreditEntity.time_in_minutes) FROM TimeCreditEntity "
+            + "WHERE date(TimeCreditEntity.timestamp) >= date('now')")
     LiveData<Integer> loadTodayRemainingTimeCredit();
 
     /**

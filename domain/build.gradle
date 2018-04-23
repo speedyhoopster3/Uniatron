@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.static-analysis'
 
 android {
     compileSdkVersion 27
@@ -24,36 +23,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    staticAnalysis {
-        penalty failOnWarnings
-        checkstyle {
-            exclude project.fileTree('src/test/java')
-            configFile rootProject.file('tools/checkstyle.xml')
-        }
-        pmd {
-            exclude project.fileTree('src/test/java')
-            //ruleSetFiles rootProject.files('tools/pmd.xml')
-        }
-        findbugs {
-            exclude project.fileTree('src/test/java')
-            excludeFilter rootProject.file('tools/findbugs.xml')
-        }
-        detekt { }
-        lintOptions { }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-
-/*
-task checkers { task ->
-    task.dependsOn(checkstyleDebug, findbugsDebug, pmdDebug)
-}
-
-check.dependsOn(checkers)
-*/
 
 dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -74,3 +48,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
+
+apply from: rootProject.file('tools/static-analysis.gradle')
