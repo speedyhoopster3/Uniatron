@@ -6,10 +6,7 @@ jdk:
   - oraclejdk8
 
 env:
-  - TERM=dumb
-  global:
-   - ANDROID_API=27
-   - ANDROID_BUILD_TOOLS=27.0.3
+- TERM=dumb
 
 before_install:
  - chmod +x gradlew
@@ -23,10 +20,10 @@ android:
     - platform-tools
 
     # The BuildTools version used by your project
-    - build-tools-$ANDROID_BUILD_TOOLS
+    - build-tools-27.0.3
 
     # The SDK version used to compile your project
-    - android-$ANDROID_API
+    - android-27
 
     - extra-android-support
     - extra-google-m2repository
@@ -52,6 +49,8 @@ cache:
 before_script:
   - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
 
 script:
   - ./gradlew clean build connectedCheck -PdisablePreDex --stacktrace
