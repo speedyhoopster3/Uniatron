@@ -24,7 +24,7 @@ before_install:
   - sdkmanager "system-images;android-$ANDROID_EMU_API_LEVEL;default;$ANDROID_ABI"
   # Create and start emulator for the script. Meant to race the install task.
   - echo no | avdmanager create avd --force -n test -k "system-images;android-$ANDROID_EMU_API_LEVEL;default;$ANDROID_ABI"
-  - $ANDROID_HOME/emulator/emulator -avd test -no-skin -no-audio -no-window &
+  - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
 
 android:
   components:
@@ -40,11 +40,6 @@ android:
     # The SDK version used to compile your project
     - android-$ANDROID_API_LEVEL
     - android-$ANDROID_EMU_API_LEVEL
-
-    - extra-android-support
-    - extra-google-m2repository
-    - extra-android-m2repository
-    - sys-img-$ANDROID_ABI-google_apis-google-$ANDROID_EMU_API_LEVEL
 
 notifications:
   email: false
