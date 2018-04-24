@@ -2,6 +2,7 @@
 Mobile Application Development
 
 [![Build Status](https://travis-ci.org/FHellmann/Uniatron.svg?branch=master)](https://travis-ci.org/FHellmann/Uniatron)
+[![Coverage Status](https://coveralls.io/repos/github/FHellmann/Uniatron/badge.svg)](https://coveralls.io/github/FHellmann/Uniatron)
 
 ## Work Guidelines
 1. Create Issue
