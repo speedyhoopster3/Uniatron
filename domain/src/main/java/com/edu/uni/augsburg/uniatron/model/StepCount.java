@@ -5,10 +5,10 @@ import java.util.Date;
 /**
  * @author Fabio Hellmann
  */
-public interface TimeCredit {
+public interface StepCount {
     int getId();
 
     Date getTimestamp();
 
-    int getTimeInMinutes();
+    int getStepCount();
 }

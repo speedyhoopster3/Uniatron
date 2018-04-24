@@ -2,26 +2,26 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4de09ece81b9c37dd065866b96dc1796",
+    "identityHash": "3d3ef7bb3bbcca836f0670c37dae5034",
     "entities": [
       {
-        "tableName": "StepCounteEntity",
+        "tableName": "StepCountEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `timestamp` INTEGER, `step_count` INTEGER NOT NULL)",
         "fields": [
           {
-            "fieldPath": "id",
+            "fieldPath": "mId",
             "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "timestamp",
+            "fieldPath": "mTimestamp",
             "columnName": "timestamp",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "stepCount",
+            "fieldPath": "mStepCount",
             "columnName": "step_count",
             "affinity": "INTEGER",
             "notNull": true
@@ -41,25 +41,25 @@
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `app_name` TEXT, `timestamp` INTEGER, `usage_time_in_seconds` INTEGER NOT NULL)",
         "fields": [
           {
-            "fieldPath": "id",
+            "fieldPath": "mId",
             "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "appName",
+            "fieldPath": "mAppName",
             "columnName": "app_name",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "timestamp",
+            "fieldPath": "mTimestamp",
             "columnName": "timestamp",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "usageTimeInSeconds",
+            "fieldPath": "mUsageTimeInSeconds",
             "columnName": "usage_time_in_seconds",
             "affinity": "INTEGER",
             "notNull": true
@@ -88,19 +88,19 @@
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `timestamp` INTEGER, `time_in_minutes` INTEGER NOT NULL)",
         "fields": [
           {
-            "fieldPath": "id",
+            "fieldPath": "mId",
             "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "timestamp",
+            "fieldPath": "mTimestamp",
             "columnName": "timestamp",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "timeInMinutes",
+            "fieldPath": "mTimeInMinutes",
             "columnName": "time_in_minutes",
             "affinity": "INTEGER",
             "notNull": true
@@ -118,7 +118,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4de09ece81b9c37dd065866b96dc1796\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"3d3ef7bb3bbcca836f0670c37dae5034\")"
     ]
   }
 }

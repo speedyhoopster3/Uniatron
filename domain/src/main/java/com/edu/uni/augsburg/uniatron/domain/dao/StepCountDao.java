@@ -1,18 +1,21 @@
 package com.edu.uni.augsburg.uniatron.domain.dao;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.paging.DataSource;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.TypeConverters;
-import android.support.annotation.NonNull;
 
 import com.edu.uni.augsburg.uniatron.domain.converter.DateConverter;
-import com.edu.uni.augsburg.uniatron.domain.model.StepCounteEntity;
+import com.edu.uni.augsburg.uniatron.domain.model.StepCountEntity;
+
+import java.util.Date;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
+/**
+ * @author Fabio Hellmann
+ */
 @Dao
 @TypeConverters({DateConverter.class})
 public interface StepCountDao {
@@ -22,21 +25,13 @@ public interface StepCountDao {
      * @param stepCount The step count to persist.
      */
     @Insert(onConflict = REPLACE)
-    void add(@NonNull StepCounteEntity stepCount);
+    void add(StepCountEntity stepCount);
 
     /**
-     * Load the remaining steps for today.
+     * Load the step count for a specified date.
      *
-     * @return The remaining steps.
+     * @return The step count.
      */
-    @Query("SELECT SUM(step_count) FROM StepCounteEntity WHERE date(timestamp) = date('now')")
-    LiveData<Integer> loadTodayRemainingSteps();
-
-    /**
-     * Query all the step counts.
-     *
-     * @return the step counts.
-     */
-    @Query("SELECT * FROM StepCounteEntity ORDER BY timestamp DESC")
-    DataSource.Factory<Integer, StepCounteEntity> loadAll();
+    @Query("SELECT SUM(step_count) FROM StepCountEntity WHERE date(timestamp) = date(:date)")
+    LiveData<Integer> loadStepCounts(Date date);
 }

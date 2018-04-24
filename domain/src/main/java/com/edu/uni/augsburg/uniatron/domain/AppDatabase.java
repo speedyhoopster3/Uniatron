@@ -12,13 +12,15 @@ import com.edu.uni.augsburg.uniatron.domain.dao.AppUsageDao;
 import com.edu.uni.augsburg.uniatron.domain.dao.StepCountDao;
 import com.edu.uni.augsburg.uniatron.domain.dao.TimeCreditDao;
 import com.edu.uni.augsburg.uniatron.domain.model.AppUsageEntity;
-import com.edu.uni.augsburg.uniatron.domain.model.StepCounteEntity;
+import com.edu.uni.augsburg.uniatron.domain.model.StepCountEntity;
 import com.edu.uni.augsburg.uniatron.domain.model.TimeCreditEntity;
 
-@Database(version = 1, entities = {StepCounteEntity.class, AppUsageEntity.class, TimeCreditEntity.class})
+/**
+ * @author Fabio Hellmann
+ */
+@Database(version = 1, entities = {StepCountEntity.class, AppUsageEntity.class, TimeCreditEntity.class})
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
-    private static AppDatabase sInstance;
 
     /**
      * Get the dao to access the step counts.
@@ -47,16 +49,23 @@ public abstract class AppDatabase extends RoomDatabase {
      * @param context The application context.
      * @return the app database.
      */
-    public static AppDatabase getInstance(@NonNull final Context context) {
-        synchronized (AppDatabase.class) {
-            if (sInstance == null) {
-                sInstance = Room.databaseBuilder(
-                        context.getApplicationContext(),
-                        AppDatabase.class,
-                        "uniatron")
-                        .build();
-            }
-        }
-        return sInstance;
+    public static AppDatabase build(@NonNull final Context context) {
+        return Room.databaseBuilder(
+                context.getApplicationContext(),
+                AppDatabase.class,
+                "uniatron")
+                .build();
+    }
+
+    /**
+     * Create an in-memory app database.
+     *
+     * @param context The application context.
+     * @return the in-memory app database.
+     */
+    public static AppDatabase buildInMemory(@NonNull final Context context) {
+        return Room.inMemoryDatabaseBuilder(context.getApplicationContext(), AppDatabase.class)
+                .allowMainThreadQueries()
+                .build();
     }
 }

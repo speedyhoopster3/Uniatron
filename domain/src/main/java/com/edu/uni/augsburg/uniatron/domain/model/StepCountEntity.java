@@ -8,39 +8,43 @@ import android.arch.persistence.room.TypeConverters;
 import java.util.Date;
 
 import com.edu.uni.augsburg.uniatron.domain.converter.DateConverter;
+import com.edu.uni.augsburg.uniatron.model.StepCount;
 
+/**
+ * @author Fabio Hellmann
+ */
 @Entity
 @TypeConverters({DateConverter.class})
-public class StepCounteEntity {
+public class StepCountEntity implements StepCount {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private int id;
+    private int mId;
     @ColumnInfo(name = "timestamp")
-    private Date timestamp;
+    private Date mTimestamp;
     @ColumnInfo(name = "step_count")
-    private int stepCount;
+    private int mStepCount;
 
     public int getId() {
-        return id;
+        return mId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public Date getTimestamp() {
-        return timestamp;
+        return mTimestamp;
     }
 
     public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+        this.mTimestamp = timestamp;
     }
 
     public int getStepCount() {
-        return stepCount;
+        return mStepCount;
     }
 
     public void setStepCount(int stepCount) {
-        this.stepCount = stepCount;
+        this.mStepCount = stepCount;
     }
 }

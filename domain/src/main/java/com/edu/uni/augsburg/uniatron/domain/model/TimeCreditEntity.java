@@ -10,38 +10,41 @@ import com.edu.uni.augsburg.uniatron.model.TimeCredit;
 
 import java.util.Date;
 
+/**
+ * @author Fabio Hellmann
+ */
 @Entity
 @TypeConverters({DateConverter.class})
 public class TimeCreditEntity implements TimeCredit {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private int id;
+    private int mId;
     @ColumnInfo(name = "timestamp")
-    private Date timestamp;
+    private Date mTimestamp;
     @ColumnInfo(name = "time_in_minutes")
-    private int timeInMinutes;
+    private int mTimeInMinutes;
 
     public int getId() {
-        return id;
+        return mId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public Date getTimestamp() {
-        return timestamp;
+        return mTimestamp;
     }
 
     public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+        this.mTimestamp = timestamp;
     }
 
     public int getTimeInMinutes() {
-        return timeInMinutes;
+        return mTimeInMinutes;
     }
 
     public void setTimeInMinutes(int timeInMinutes) {
-        this.timeInMinutes = timeInMinutes;
+        this.mTimeInMinutes = timeInMinutes;
     }
 }

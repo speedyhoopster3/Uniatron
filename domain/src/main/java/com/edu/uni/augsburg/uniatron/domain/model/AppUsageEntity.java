@@ -11,48 +11,51 @@ import java.util.Date;
 import com.edu.uni.augsburg.uniatron.domain.converter.DateConverter;
 import com.edu.uni.augsburg.uniatron.model.AppUsage;
 
+/**
+ * @author Fabio Hellmann
+ */
 @Entity(indices = {@Index("app_name")})
 @TypeConverters({DateConverter.class})
 public class AppUsageEntity implements AppUsage {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private int id;
+    private int mId;
     @ColumnInfo(name = "app_name")
-    private String appName;
+    private String mAppName;
     @ColumnInfo(name = "timestamp")
-    private Date timestamp;
+    private Date mTimestamp;
     @ColumnInfo(name = "usage_time_in_seconds")
-    private int usageTimeInSeconds;
+    private int mUsageTimeInSeconds;
 
     public int getId() {
-        return id;
+        return mId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public String getAppName() {
-        return appName;
+        return mAppName;
     }
 
     public void setAppName(String appName) {
-        this.appName = appName;
+        this.mAppName = appName;
     }
 
     public Date getTimestamp() {
-        return timestamp;
+        return mTimestamp;
     }
 
     public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+        this.mTimestamp = timestamp;
     }
 
     public int getUsageTimeInSeconds() {
-        return usageTimeInSeconds;
+        return mUsageTimeInSeconds;
     }
 
     public void setUsageTimeInSeconds(int usageTimeInSeconds) {
-        this.usageTimeInSeconds = usageTimeInSeconds;
+        this.mUsageTimeInSeconds = usageTimeInSeconds;
     }
 }
