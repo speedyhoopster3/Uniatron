@@ -1,4 +1,4 @@
-package com.edu.uni.augsburg.uniatron.domain.dao.util;
+package com.edu.uni.augsburg.uniatron.domain.util;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
@@ -15,7 +15,7 @@ public final class TestUtils {
     private TestUtils() {
     }
 
-    public static <T> T getValue(@NonNull final LiveData<T> liveData) throws InterruptedException {
+    public static <T> T getLiveDataValue(@NonNull final LiveData<T> liveData) throws InterruptedException {
         final Object[] data = new Object[1];
         CountDownLatch latch = new CountDownLatch(1);
         Observer<T> observer = new Observer<T>() {

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
 import com.edu.uni.augsburg.uniatron.domain.AppDatabase;
-import com.edu.uni.augsburg.uniatron.domain.dao.util.TestUtils;
+import com.edu.uni.augsburg.uniatron.domain.util.TestUtils;
 import com.edu.uni.augsburg.uniatron.domain.model.StepCountEntity;
 
 import org.junit.After;
@@ -55,7 +55,7 @@ public class StepCountDaoTest {
         final LiveData<Integer> data = mDao.loadStepCounts(TestUtils.getDate(1, 1, 2018));
 
         assertThat(data, is(notNullValue()));
-        assertThat(TestUtils.getValue(data), is(count * 5));
+        assertThat(TestUtils.getLiveDataValue(data), is(count * 5));
     }
 
     private StepCountEntity create(int count, Date date) {

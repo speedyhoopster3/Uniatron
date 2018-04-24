@@ -8,12 +8,12 @@ import com.edu.uni.augsburg.uniatron.domain.dao.AppUsageDao;
 import com.edu.uni.augsburg.uniatron.domain.dao.StepCountDao;
 import com.edu.uni.augsburg.uniatron.domain.dao.TimeCreditDao;
 import com.edu.uni.augsburg.uniatron.domain.model.AppUsageEntity;
+import com.edu.uni.augsburg.uniatron.domain.util.TestUtils;
 import com.edu.uni.augsburg.uniatron.model.AppUsage;
 import com.edu.uni.augsburg.uniatron.model.StepCount;
 import com.edu.uni.augsburg.uniatron.model.TimeCredit;
 import com.edu.uni.augsburg.uniatron.model.TimeCreditItem;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -25,6 +25,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
+import static com.edu.uni.augsburg.uniatron.domain.util.TestUtils.getLiveDataValue;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -156,7 +157,7 @@ public class DataRepositoryTest {
     }
 
     @Test
-    public void getAppUsageTimeToday() {
+    public void getAppUsageTimeToday() throws Exception {
         final List<AppUsageEntity> list = new ArrayList<>();
 
         final AppUsageEntity entity = new AppUsageEntity();
@@ -179,16 +180,15 @@ public class DataRepositoryTest {
 
         final LiveData<Map<String, Integer>> data = mRepository.getAppUsageTimeToday();
 
-        assertThat(data, is(notNullValue()));
-        assertThat(data.getValue(), is(notNullValue()));
-        assertThat(data.getValue().size(), is(2));
-        assertThat(data.getValue().keySet(), hasItems("Test", "Test1"));
-        assertThat(data.getValue().values(), hasItems(10, 7));
+        assertThat(getLiveDataValue(data), is(notNullValue()));
+        assertThat(getLiveDataValue(data).size(), is(2));
+        assertThat(getLiveDataValue(data).keySet(), hasItems("Test", "Test1"));
+        assertThat(getLiveDataValue(data).values(), hasItems(10, 7));
         verify(appUsageDao, atLeastOnce()).loadAppUsageTime(any());
     }
 
     @Test
-    public void getAppUsageTimeByDate() {
+    public void getAppUsageTimeByDate() throws Exception {
         final List<AppUsageEntity> list = new ArrayList<>();
 
         final AppUsageEntity entity = new AppUsageEntity();
@@ -212,16 +212,15 @@ public class DataRepositoryTest {
         final LiveData<Map<String, Integer>> data = mRepository
                 .getAppUsageTimeByDate(getDate(1, 1, 2000));
 
-        assertThat(data, is(notNullValue()));
-        assertThat(data.getValue(), is(notNullValue()));
-        assertThat(data.getValue().size(), is(1));
-        assertThat(data.getValue().keySet(), hasItems("Test1"));
-        assertThat(data.getValue().values(), hasItems(7));
+        assertThat(getLiveDataValue(data), is(notNullValue()));
+        assertThat(getLiveDataValue(data).size(), is(1));
+        assertThat(getLiveDataValue(data).keySet(), hasItems("Test1"));
+        assertThat(getLiveDataValue(data).values(), hasItems(7));
         verify(appUsageDao, atLeastOnce()).loadAppUsageTime(any());
     }
 
     @Test
-    public void getAppUsagePercentToday() {
+    public void getAppUsagePercentToday() throws Exception {
         final List<AppUsageEntity> list = new ArrayList<>();
 
         final AppUsageEntity entity = new AppUsageEntity();
@@ -244,16 +243,15 @@ public class DataRepositoryTest {
 
         final LiveData<Map<String, Double>> data = mRepository.getAppUsagePercentToday();
 
-        assertThat(data, is(notNullValue()));
-        assertThat(data.getValue(), is(notNullValue()));
-        assertThat(data.getValue().size(), is(2));
-        assertThat(data.getValue().keySet(), hasItems("Test", "Test1"));
-        assertThat(data.getValue().values(), hasItems(0.90, 0.10));
+        assertThat(getLiveDataValue(data), is(notNullValue()));
+        assertThat(getLiveDataValue(data).size(), is(2));
+        assertThat(getLiveDataValue(data).keySet(), hasItems("Test", "Test1"));
+        assertThat(getLiveDataValue(data).values(), hasItems(0.90, 0.10));
         verify(appUsageDao, atLeastOnce()).loadAppUsagePercent(any());
     }
 
     @Test
-    public void getAppUsagePercentByDate() {
+    public void getAppUsagePercentByDate() throws Exception {
         final List<AppUsageEntity> list = new ArrayList<>();
 
         final AppUsageEntity entity = new AppUsageEntity();
@@ -277,11 +275,10 @@ public class DataRepositoryTest {
         final LiveData<Map<String, Double>> data = mRepository
                 .getAppUsagePercentByDate(getDate(1, 1, 2000));
 
-        assertThat(data, is(notNullValue()));
-        assertThat(data.getValue(), is(notNullValue()));
-        assertThat(data.getValue().size(), is(1));
-        assertThat(data.getValue().keySet(), hasItems("Test1"));
-        assertThat(data.getValue().values(), hasItems(1.0));
+        assertThat(getLiveDataValue(data), is(notNullValue()));
+        assertThat(getLiveDataValue(data).size(), is(1));
+        assertThat(getLiveDataValue(data).keySet(), hasItems("Test1"));
+        assertThat(getLiveDataValue(data).values(), hasItems(1.0));
         verify(appUsageDao, atLeastOnce()).loadAppUsagePercent(any());
     }
 

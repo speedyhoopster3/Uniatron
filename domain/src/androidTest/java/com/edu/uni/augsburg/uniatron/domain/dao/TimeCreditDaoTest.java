@@ -5,14 +5,15 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
 import com.edu.uni.augsburg.uniatron.domain.AppDatabase;
-import com.edu.uni.augsburg.uniatron.domain.dao.util.TestUtils;
+import com.edu.uni.augsburg.uniatron.domain.util.TestUtils;
 import com.edu.uni.augsburg.uniatron.domain.model.TimeCreditEntity;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.edu.uni.augsburg.uniatron.domain.dao.util.TestUtils.getDate;
+import static com.edu.uni.augsburg.uniatron.domain.util.TestUtils.getDate;
+import static com.edu.uni.augsburg.uniatron.domain.util.TestUtils.getLiveDataValue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
@@ -55,9 +56,9 @@ public class TimeCreditDaoTest {
         final LiveData<Integer> data2 = mDao.loadTimeCredits(getDate(1, 2, 2018));
         final LiveData<Integer> data3 = mDao.loadTimeCredits(getDate(1, 3, 2018));
 
-        assertThat(TestUtils.getValue(data1), is(10));
-        assertThat(TestUtils.getValue(data2), is(10));
-        assertThat(TestUtils.getValue(data3), is(5));
+        assertThat(getLiveDataValue(data1), is(10));
+        assertThat(getLiveDataValue(data2), is(10));
+        assertThat(getLiveDataValue(data3), is(5));
     }
 
     private TimeCreditEntity createTestData(int month) {
