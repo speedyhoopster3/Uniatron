@@ -2,20 +2,30 @@ package com.edu.uni.augsburg.uniatron.domain;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
 
 import com.edu.uni.augsburg.uniatron.domain.dao.AppUsageDao;
 import com.edu.uni.augsburg.uniatron.domain.dao.StepCountDao;
 import com.edu.uni.augsburg.uniatron.domain.dao.TimeCreditDao;
+import com.edu.uni.augsburg.uniatron.domain.model.AppUsageEntity;
+import com.edu.uni.augsburg.uniatron.model.AppUsage;
 import com.edu.uni.augsburg.uniatron.model.StepCount;
 import com.edu.uni.augsburg.uniatron.model.TimeCredit;
 import com.edu.uni.augsburg.uniatron.model.TimeCreditItem;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertFalse;
@@ -34,15 +44,15 @@ public class DataRepositoryTest {
     private TimeCreditDao timeCreditDao;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         appUsageDao = mock(AppUsageDao.class);
         stepCountDao = mock(StepCountDao.class);
         timeCreditDao = mock(TimeCreditDao.class);
 
         final AppDatabase database = mock(AppDatabase.class);
-        Mockito.when(database.appUsageDao()).thenReturn(appUsageDao);
-        Mockito.when(database.stepCountDao()).thenReturn(stepCountDao);
-        Mockito.when(database.timeCreditDao()).thenReturn(timeCreditDao);
+        when(database.appUsageDao()).thenReturn(appUsageDao);
+        when(database.stepCountDao()).thenReturn(stepCountDao);
+        when(database.timeCreditDao()).thenReturn(timeCreditDao);
 
         mRepository = new DataRepository(database);
     }
@@ -131,21 +141,154 @@ public class DataRepositoryTest {
 
     @Test
     public void addAppUsage() {
+        final int value = 10;
+        final AppUsage appUsage = mRepository.addAppUsage("test", value);
+        assertThat(appUsage, is(notNullValue()));
+        assertThat(appUsage.getUsageTimeInSeconds(), is(value));
+    }
+
+    @Test(expected = Exception.class)
+    public void addAppUsageFailed() {
+        Mockito.doThrow(Exception.class).when(appUsageDao).add(any());
+
+        mRepository.addAppUsage("test", 10);
+        assertFalse("Should has thrown an exception!", true);
     }
 
     @Test
     public void getAppUsageTimeToday() {
+        final List<AppUsageEntity> list = new ArrayList<>();
+
+        final AppUsageEntity entity = new AppUsageEntity();
+        entity.setId(0);
+        entity.setTimestamp(new Date());
+        entity.setUsageTimeInSeconds(10);
+        entity.setAppName("Test");
+        list.add(entity);
+
+        final AppUsageEntity entity1 = new AppUsageEntity();
+        entity1.setId(1);
+        entity1.setTimestamp(new Date());
+        entity1.setUsageTimeInSeconds(7);
+        entity1.setAppName("Test1");
+        list.add(entity1);
+
+        final LiveData<List<AppUsageEntity>> liveData = spy(new MutableLiveData<>());
+        when(liveData.getValue()).thenReturn(list);
+        when(appUsageDao.loadAppUsageTime(any())).thenReturn(liveData);
+
+        final LiveData<Map<String, Integer>> data = mRepository.getAppUsageTimeToday();
+
+        assertThat(data, is(notNullValue()));
+        assertThat(data.getValue(), is(notNullValue()));
+        assertThat(data.getValue().size(), is(2));
+        assertThat(data.getValue().keySet(), hasItems("Test", "Test1"));
+        assertThat(data.getValue().values(), hasItems(10, 7));
+        verify(appUsageDao, atLeastOnce()).loadAppUsageTime(any());
     }
 
     @Test
     public void getAppUsageTimeByDate() {
+        final List<AppUsageEntity> list = new ArrayList<>();
+
+        final AppUsageEntity entity = new AppUsageEntity();
+        entity.setId(0);
+        entity.setTimestamp(getDate(1, 1, 1990));
+        entity.setUsageTimeInSeconds(10);
+        entity.setAppName("Test");
+        list.add(entity);
+
+        final AppUsageEntity entity1 = new AppUsageEntity();
+        entity1.setId(1);
+        entity1.setTimestamp(getDate(1, 1, 2000));
+        entity1.setUsageTimeInSeconds(7);
+        entity1.setAppName("Test1");
+        list.add(entity1);
+
+        final LiveData<List<AppUsageEntity>> liveData = spy(new MutableLiveData<>());
+        when(liveData.getValue()).thenReturn(list);
+        when(appUsageDao.loadAppUsageTime(any())).thenReturn(liveData);
+
+        final LiveData<Map<String, Integer>> data = mRepository
+                .getAppUsageTimeByDate(getDate(1, 1, 2000));
+
+        assertThat(data, is(notNullValue()));
+        assertThat(data.getValue(), is(notNullValue()));
+        assertThat(data.getValue().size(), is(1));
+        assertThat(data.getValue().keySet(), hasItems("Test1"));
+        assertThat(data.getValue().values(), hasItems(7));
+        verify(appUsageDao, atLeastOnce()).loadAppUsageTime(any());
     }
 
     @Test
     public void getAppUsagePercentToday() {
+        final List<AppUsageEntity> list = new ArrayList<>();
+
+        final AppUsageEntity entity = new AppUsageEntity();
+        entity.setId(0);
+        entity.setTimestamp(new Date());
+        entity.setUsageTimeInSeconds(90);
+        entity.setAppName("Test");
+        list.add(entity);
+
+        final AppUsageEntity entity1 = new AppUsageEntity();
+        entity1.setId(1);
+        entity1.setTimestamp(new Date());
+        entity1.setUsageTimeInSeconds(10);
+        entity1.setAppName("Test1");
+        list.add(entity1);
+
+        final LiveData<List<AppUsageEntity>> liveData = spy(new MutableLiveData<>());
+        when(liveData.getValue()).thenReturn(list);
+        when(appUsageDao.loadAppUsagePercent(any())).thenReturn(liveData);
+
+        final LiveData<Map<String, Double>> data = mRepository.getAppUsagePercentToday();
+
+        assertThat(data, is(notNullValue()));
+        assertThat(data.getValue(), is(notNullValue()));
+        assertThat(data.getValue().size(), is(2));
+        assertThat(data.getValue().keySet(), hasItems("Test", "Test1"));
+        assertThat(data.getValue().values(), hasItems(0.90, 0.10));
+        verify(appUsageDao, atLeastOnce()).loadAppUsagePercent(any());
     }
 
     @Test
     public void getAppUsagePercentByDate() {
+        final List<AppUsageEntity> list = new ArrayList<>();
+
+        final AppUsageEntity entity = new AppUsageEntity();
+        entity.setId(0);
+        entity.setTimestamp(getDate(1, 1, 1990));
+        entity.setUsageTimeInSeconds(90);
+        entity.setAppName("Test");
+        list.add(entity);
+
+        final AppUsageEntity entity1 = new AppUsageEntity();
+        entity1.setId(1);
+        entity1.setTimestamp(getDate(1, 1, 2000));
+        entity1.setUsageTimeInSeconds(10);
+        entity1.setAppName("Test1");
+        list.add(entity1);
+
+        final LiveData<List<AppUsageEntity>> liveData = spy(new MutableLiveData<>());
+        when(liveData.getValue()).thenReturn(list);
+        when(appUsageDao.loadAppUsagePercent(any())).thenReturn(liveData);
+
+        final LiveData<Map<String, Double>> data = mRepository
+                .getAppUsagePercentByDate(getDate(1, 1, 2000));
+
+        assertThat(data, is(notNullValue()));
+        assertThat(data.getValue(), is(notNullValue()));
+        assertThat(data.getValue().size(), is(1));
+        assertThat(data.getValue().keySet(), hasItems("Test1"));
+        assertThat(data.getValue().values(), hasItems(1.0));
+        verify(appUsageDao, atLeastOnce()).loadAppUsagePercent(any());
+    }
+
+    @NonNull
+    private static Date getDate(int date, int month, int year) {
+        final Calendar calendar = GregorianCalendar.getInstance();
+        calendar.set(year, month - 1, date);
+        return calendar.getTime();
     }
 }

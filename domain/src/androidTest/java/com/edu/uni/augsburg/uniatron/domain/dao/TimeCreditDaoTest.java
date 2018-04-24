@@ -1,25 +1,18 @@
 package com.edu.uni.augsburg.uniatron.domain.dao;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
-import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 
 import com.edu.uni.augsburg.uniatron.domain.AppDatabase;
+import com.edu.uni.augsburg.uniatron.domain.dao.util.TestUtils;
 import com.edu.uni.augsburg.uniatron.domain.model.TimeCreditEntity;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import static org.hamcrest.CoreMatchers.equalTo;
+import static com.edu.uni.augsburg.uniatron.domain.dao.util.TestUtils.getDate;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
@@ -32,52 +25,46 @@ public class TimeCreditDaoTest {
     private TimeCreditDao mDao;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         final Context context = InstrumentationRegistry.getTargetContext();
         mDb = AppDatabase.buildInMemory(context);
         mDao = mDb.timeCreditDao();
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         mDb.close();
     }
 
     @Test
     public void add() {
-        final int value = -1;
-        final TimeCreditEntity timeCreditEntity1 = createTestData(1, 1, 2018);
-        timeCreditEntity1.setId(value);
+        final TimeCreditEntity timeCreditEntity1 = createTestData(1);
         mDao.add(timeCreditEntity1);
-        assertThat(timeCreditEntity1, is(not(value)));
+        assertThat(timeCreditEntity1.getId(), is(not(-1)));
     }
 
     @Test
-    public void loadTimeCredits() {
-        final Observer<Integer> observer = mock(Observer.class);
+    public void loadTimeCredits() throws Exception {
+        mDao.add(createTestData(1));
+        mDao.add(createTestData(1));
+        mDao.add(createTestData(2));
+        mDao.add(createTestData(3));
+        mDao.add(createTestData(2));
 
-        mDao.add(createTestData(1, 1, 2018));
-        mDao.add(createTestData(1, 1, 2018));
-        mDao.add(createTestData(1, 2, 2018));
-        mDao.add(createTestData(1, 3, 2018));
-        mDao.add(createTestData(1, 2, 2018));
+        final LiveData<Integer> data1 = mDao.loadTimeCredits(getDate(1, 1, 2018));
+        final LiveData<Integer> data2 = mDao.loadTimeCredits(getDate(1, 2, 2018));
+        final LiveData<Integer> data3 = mDao.loadTimeCredits(getDate(1, 3, 2018));
 
-        final LiveData<Integer> data = mDao.loadTimeCredits(getDate(1, 1, 2018));
-        data.observeForever(observer);
-        verify(observer).onChanged(eq(10));
+        assertThat(TestUtils.getValue(data1), is(10));
+        assertThat(TestUtils.getValue(data2), is(10));
+        assertThat(TestUtils.getValue(data3), is(5));
     }
 
-    private TimeCreditEntity createTestData(int date, int month, int year) {
+    private TimeCreditEntity createTestData(int month) {
         final TimeCreditEntity timeCreditEntity = new TimeCreditEntity();
+        timeCreditEntity.setId(-1);
         timeCreditEntity.setTimeInMinutes(5);
-        timeCreditEntity.setTimestamp(getDate(date, month, year));
+        timeCreditEntity.setTimestamp(getDate(1, month, 2018));
         return timeCreditEntity;
-    }
-
-    @NonNull
-    private Date getDate(int date, int month, int year) {
-        final Calendar calendar = GregorianCalendar.getInstance();
-        calendar.set(year, month - 1, date);
-        return calendar.getTime();
     }
 }
