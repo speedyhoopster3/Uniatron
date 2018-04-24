@@ -5,7 +5,6 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.TypeConverters;
-import android.support.annotation.NonNull;
 
 import com.edu.uni.augsburg.uniatron.domain.converter.DateConverter;
 import com.edu.uni.augsburg.uniatron.domain.model.TimeCreditEntity;
