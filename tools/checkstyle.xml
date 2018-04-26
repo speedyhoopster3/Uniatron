@@ -40,26 +40,28 @@ Severity: HARD
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sourceforge.net/config_javadoc.html -->
         <module name="JavadocMethod">
-            <property name="scope" value="package" />
-            <property name="allowMissingParamTags" value="true" />
-            <property name="allowMissingThrowsTags" value="true" />
-            <property name="allowMissingReturnTag" value="true" />
-            <property name="allowThrowsTagsForSubclasses" value="true" />
+            <property name="scope" value="protected" />
+            <property name="allowMissingParamTags" value="false" />
+            <property name="allowMissingThrowsTags" value="false" />
+            <property name="allowMissingReturnTag" value="false" />
+            <property name="allowThrowsTagsForSubclasses" value="false" />
             <property name="allowUndeclaredRTE" value="true" />
             <property name="allowMissingPropertyJavadoc" value="true" />
-            <property name="severity" value="ignore" />
+            <property name="severity" value="error" />
         </module>
         <module name="JavadocType">
-            <property name="scope" value="package" />
-            <property name="severity" value="ignore" />
+            <property name="scope" value="protected" />
+            <property name="severity" value="error" />
         </module>
         <module name="JavadocVariable">
-            <property name="scope" value="package" />
-            <property name="severity" value="ignore" />
+            <property name="scope" value="protected" />
+            <property name="severity" value="error" />
         </module>
         <module name="JavadocStyle">
+            <property name="scope" value="protected" />
             <property name="checkEmptyJavadoc" value="true" />
-            <property name="severity" value="ignore" />
+            <property name="checkHtml" value="true" />
+            <property name="severity" value="error" />
         </module>
 
         <!-- Checks for Naming Conventions.                  -->

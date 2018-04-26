@@ -57,3 +57,14 @@ dependencies {
 }
 
 apply from: rootProject.file('tools/static-analysis.gradle')
+
+apply plugin: 'com.github.kt3k.coveralls'
+apply from: '../tools/jacoco.gradle'
+
+coveralls {
+    jacocoReportPath = "${buildDir}/reports/jacoco/testCoverage.xml"
+}
+tasks.coveralls {
+    dependsOn 'test'
+    onlyIf { System.env.'CI' }
+}
