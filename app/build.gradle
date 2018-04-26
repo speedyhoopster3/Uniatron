@@ -1,18 +1,24 @@
 apply plugin: 'com.android.application'
+apply plugin: 'jacoco-android'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion configCompileSdkVersion
+    buildToolsVersion configBuildToolsVersion
 
     defaultConfig {
         applicationId "com.edu.uni.augsburg.uniatron"
-        minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion configMinSdkVersion
+        targetSdkVersion configTargetSdkVersion
+        versionCode configVersionCode
+        versionName project.version
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
+            testCoverageEnabled true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -41,14 +47,3 @@ dependencies {
 }
 
 apply from: rootProject.file('tools/static-analysis.gradle')
-
-apply plugin: 'com.github.kt3k.coveralls'
-apply from: '../tools/jacoco.gradle'
-
-coveralls {
-    jacocoReportPath = "${buildDir}/reports/jacoco/testCoverage.xml"
-}
-tasks.coveralls {
-    dependsOn 'test'
-    onlyIf { System.env.'CI' }
-}
