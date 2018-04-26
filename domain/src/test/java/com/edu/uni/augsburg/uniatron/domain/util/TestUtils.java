@@ -5,6 +5,8 @@ import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -15,7 +17,8 @@ public final class TestUtils {
     private TestUtils() {
     }
 
-    public static <T> T getLiveDataValue(@NonNull final LiveData<T> liveData) throws InterruptedException {
+    public static <T> T getLiveDataValue(@NonNull final LiveData<T> liveData)
+            throws InterruptedException {
         final Object[] data = new Object[1];
         CountDownLatch latch = new CountDownLatch(1);
         Observer<T> observer = new Observer<T>() {

@@ -1,5 +1,6 @@
 package com.edu.uni.augsburg.uniatron.domain;
 
+import android.arch.core.executor.testing.InstantTaskExecutorRule;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
@@ -15,7 +16,9 @@ import com.edu.uni.augsburg.uniatron.model.TimeCredit;
 import com.edu.uni.augsburg.uniatron.model.TimeCreditItem;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -39,6 +42,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class DataRepositoryTest {
+    @Rule
+    public TestRule rule = new InstantTaskExecutorRule();
+
     private DataRepository mRepository;
     private AppUsageDao appUsageDao;
     private StepCountDao stepCountDao;
@@ -174,8 +180,8 @@ public class DataRepositoryTest {
         entity1.setAppName("Test1");
         list.add(entity1);
 
-        final LiveData<List<AppUsageEntity>> liveData = spy(new MutableLiveData<>());
-        when(liveData.getValue()).thenReturn(list);
+        final MutableLiveData<List<AppUsageEntity>> liveData = new MutableLiveData<>();
+        liveData.setValue(list);
         when(appUsageDao.loadAppUsageTime(any())).thenReturn(liveData);
 
         final LiveData<Map<String, Integer>> data = mRepository.getAppUsageTimeToday();
@@ -205,17 +211,17 @@ public class DataRepositoryTest {
         entity1.setAppName("Test1");
         list.add(entity1);
 
-        final LiveData<List<AppUsageEntity>> liveData = spy(new MutableLiveData<>());
-        when(liveData.getValue()).thenReturn(list);
+        final MutableLiveData<List<AppUsageEntity>> liveData = new MutableLiveData<>();
+        liveData.setValue(list);
         when(appUsageDao.loadAppUsageTime(any())).thenReturn(liveData);
 
         final LiveData<Map<String, Integer>> data = mRepository
                 .getAppUsageTimeByDate(getDate(1, 1, 2000));
 
         assertThat(getLiveDataValue(data), is(notNullValue()));
-        assertThat(getLiveDataValue(data).size(), is(1));
-        assertThat(getLiveDataValue(data).keySet(), hasItems("Test1"));
-        assertThat(getLiveDataValue(data).values(), hasItems(7));
+        assertThat(getLiveDataValue(data).size(), is(2));
+        assertThat(getLiveDataValue(data).keySet(), hasItems("Test", "Test1"));
+        assertThat(getLiveDataValue(data).values(), hasItems(10, 7));
         verify(appUsageDao, atLeastOnce()).loadAppUsageTime(any());
     }
 
@@ -237,8 +243,8 @@ public class DataRepositoryTest {
         entity1.setAppName("Test1");
         list.add(entity1);
 
-        final LiveData<List<AppUsageEntity>> liveData = spy(new MutableLiveData<>());
-        when(liveData.getValue()).thenReturn(list);
+        final MutableLiveData<List<AppUsageEntity>> liveData = new MutableLiveData<>();
+        liveData.setValue(list);
         when(appUsageDao.loadAppUsagePercent(any())).thenReturn(liveData);
 
         final LiveData<Map<String, Double>> data = mRepository.getAppUsagePercentToday();
@@ -268,17 +274,17 @@ public class DataRepositoryTest {
         entity1.setAppName("Test1");
         list.add(entity1);
 
-        final LiveData<List<AppUsageEntity>> liveData = spy(new MutableLiveData<>());
-        when(liveData.getValue()).thenReturn(list);
+        final MutableLiveData<List<AppUsageEntity>> liveData = new MutableLiveData<>();
+        liveData.setValue(list);
         when(appUsageDao.loadAppUsagePercent(any())).thenReturn(liveData);
 
         final LiveData<Map<String, Double>> data = mRepository
                 .getAppUsagePercentByDate(getDate(1, 1, 2000));
 
         assertThat(getLiveDataValue(data), is(notNullValue()));
-        assertThat(getLiveDataValue(data).size(), is(1));
-        assertThat(getLiveDataValue(data).keySet(), hasItems("Test1"));
-        assertThat(getLiveDataValue(data).values(), hasItems(1.0));
+        assertThat(getLiveDataValue(data).size(), is(2));
+        assertThat(getLiveDataValue(data).keySet(), hasItems("Test", "Test1"));
+        assertThat(getLiveDataValue(data).values(), hasItems(0.9, 0.1));
         verify(appUsageDao, atLeastOnce()).loadAppUsagePercent(any());
     }
 
