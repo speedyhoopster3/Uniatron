@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'jacoco-android'
 
 android {
     compileSdkVersion configCompileSdkVersion
@@ -15,8 +14,6 @@ android {
     }
     buildTypes {
         debug {
-            applicationIdSuffix '.debug'
-            versionNameSuffix '-debug'
             testCoverageEnabled true
         }
         release {
@@ -47,3 +44,4 @@ dependencies {
 }
 
 apply from: rootProject.file('tools/static-analysis.gradle')
+apply from: rootProject.file('tools/coverage.gradle')
