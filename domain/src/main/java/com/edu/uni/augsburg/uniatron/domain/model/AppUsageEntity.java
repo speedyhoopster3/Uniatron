@@ -12,6 +12,8 @@ import com.edu.uni.augsburg.uniatron.model.AppUsage;
 import java.util.Date;
 
 /**
+ * The model for the app usage.
+ *
  * @author Fabio Hellmann
  */
 @Entity(indices = {@Index("app_name")})

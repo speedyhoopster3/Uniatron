@@ -11,6 +11,8 @@ import com.edu.uni.augsburg.uniatron.model.TimeCredit;
 import java.util.Date;
 
 /**
+ * The model for the time credit.
+ *
  * @author Fabio Hellmann
  */
 @Entity

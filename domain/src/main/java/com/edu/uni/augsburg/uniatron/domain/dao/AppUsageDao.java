@@ -15,6 +15,8 @@ import java.util.List;
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 /**
+ * The dao contains all the calls depending to app usage.
+ *
  * @author Fabio Hellmann
  */
 @Dao

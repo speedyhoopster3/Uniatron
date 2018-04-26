@@ -20,6 +20,8 @@ import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMaxDate
 import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMinDate;
 
 /**
+ * The data repository wraps the database/service interaction.
+ *
  * @author Fabio Hellmann
  */
 public final class DataRepository {

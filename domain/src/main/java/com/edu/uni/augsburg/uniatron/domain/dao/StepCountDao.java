@@ -14,6 +14,8 @@ import java.util.Date;
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 /**
+ * The dao contains all the calls depending to step count.
+ *
  * @author Fabio Hellmann
  */
 @Dao

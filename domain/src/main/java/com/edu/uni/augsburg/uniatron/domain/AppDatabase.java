@@ -16,6 +16,8 @@ import com.edu.uni.augsburg.uniatron.domain.model.StepCountEntity;
 import com.edu.uni.augsburg.uniatron.domain.model.TimeCreditEntity;
 
 /**
+ * The app database layer.
+ *
  * @author Fabio Hellmann
  */
 @Database(version = 1, entities = {StepCountEntity.class, AppUsageEntity.class, TimeCreditEntity.class})

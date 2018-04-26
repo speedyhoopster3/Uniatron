@@ -11,6 +11,8 @@ import com.edu.uni.augsburg.uniatron.model.StepCount;
 import java.util.Date;
 
 /**
+ * The model for the step count.
+ *
  * @author Fabio Hellmann
  */
 @Entity
