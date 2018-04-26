@@ -6,7 +6,7 @@ import java.util.Date;
  * @author Fabio Hellmann
  */
 public interface TimeCredit {
-    int getId();
+    long getId();
 
     Date getTimestamp();
 

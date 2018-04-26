@@ -5,21 +5,21 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
 import com.edu.uni.augsburg.uniatron.domain.AppDatabase;
-import com.edu.uni.augsburg.uniatron.domain.util.TestUtils;
 import com.edu.uni.augsburg.uniatron.domain.model.TimeCreditEntity;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Date;
+
+import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMaxDate;
+import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMinDate;
 import static com.edu.uni.augsburg.uniatron.domain.util.TestUtils.getDate;
 import static com.edu.uni.augsburg.uniatron.domain.util.TestUtils.getLiveDataValue;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 public class TimeCreditDaoTest {
     private AppDatabase mDb;
@@ -41,7 +41,8 @@ public class TimeCreditDaoTest {
     public void add() {
         final TimeCreditEntity timeCreditEntity1 = createTestData(1);
         mDao.add(timeCreditEntity1);
-        assertThat(timeCreditEntity1.getId(), is(not(-1)));
+
+        assertThat(timeCreditEntity1.getId(), is(notNullValue()));
     }
 
     @Test
@@ -52,18 +53,15 @@ public class TimeCreditDaoTest {
         mDao.add(createTestData(3));
         mDao.add(createTestData(2));
 
-        final LiveData<Integer> data1 = mDao.loadTimeCredits(getDate(1, 1, 2018));
-        final LiveData<Integer> data2 = mDao.loadTimeCredits(getDate(1, 2, 2018));
-        final LiveData<Integer> data3 = mDao.loadTimeCredits(getDate(1, 3, 2018));
+        final Date date = getDate(1, 1, 2018);
+        final LiveData<Integer> data = mDao
+                .loadTimeCredits(extractMinDate(date), extractMaxDate(date));
 
-        assertThat(getLiveDataValue(data1), is(10));
-        assertThat(getLiveDataValue(data2), is(10));
-        assertThat(getLiveDataValue(data3), is(5));
+        assertThat(getLiveDataValue(data), is(10));
     }
 
     private TimeCreditEntity createTestData(int month) {
         final TimeCreditEntity timeCreditEntity = new TimeCreditEntity();
-        timeCreditEntity.setId(-1);
         timeCreditEntity.setTimeInMinutes(5);
         timeCreditEntity.setTimestamp(getDate(1, month, 2018));
         return timeCreditEntity;

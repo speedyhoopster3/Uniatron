@@ -16,6 +16,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMaxDate;
+import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMinDate;
+
 /**
  * @author Fabio Hellmann
  */
@@ -63,7 +66,9 @@ public final class DataRepository {
      */
     @NonNull
     public LiveData<Integer> getTimeCreditsByDate(@NonNull final Date date) {
-        return mDatabase.timeCreditDao().loadTimeCredits(date);
+        final Date dateFrom = extractMinDate(date);
+        final Date dateTo = extractMaxDate(date);
+        return mDatabase.timeCreditDao().loadTimeCredits(dateFrom, dateTo);
     }
 
     /**
@@ -98,13 +103,15 @@ public final class DataRepository {
      */
     @NonNull
     public LiveData<Integer> getStepCountsByDate(@NonNull final Date date) {
-        return mDatabase.stepCountDao().loadStepCounts(date);
+        final Date dateFrom = extractMinDate(date);
+        final Date dateTo = extractMaxDate(date);
+        return mDatabase.stepCountDao().loadStepCounts(dateFrom, dateTo);
     }
 
     /**
      * Add the usage time of an app.
      *
-     * @param appName The name of the app which was used.
+     * @param appName            The name of the app which was used.
      * @param usageTimeInSeconds The time of usage.
      * @return The app usage data.
      */
@@ -135,8 +142,10 @@ public final class DataRepository {
      */
     @NonNull
     public LiveData<Map<String, Integer>> getAppUsageTimeByDate(@NonNull final Date date) {
+        final Date dateFrom = extractMinDate(date);
+        final Date dateTo = extractMaxDate(date);
         return Transformations.map(
-                mDatabase.appUsageDao().loadAppUsageTime(date),
+                mDatabase.appUsageDao().loadAppUsageTime(dateFrom, dateTo),
                 appUsageList -> {
                     final HashMap<String, Integer> map = new HashMap<>();
                     for (AppUsage usage : appUsageList) {
@@ -164,8 +173,10 @@ public final class DataRepository {
      */
     @NonNull
     public LiveData<Map<String, Double>> getAppUsagePercentByDate(@NonNull final Date date) {
+        final Date dateFrom = extractMinDate(date);
+        final Date dateTo = extractMaxDate(date);
         return Transformations.map(
-                mDatabase.appUsageDao().loadAppUsagePercent(date),
+                mDatabase.appUsageDao().loadAppUsagePercent(dateFrom, dateTo),
                 appUsageList -> {
                     final HashMap<String, Double> map = new HashMap<>();
                     for (AppUsage usage : appUsageList) {

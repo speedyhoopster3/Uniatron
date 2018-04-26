@@ -64,7 +64,7 @@ public abstract class AppDatabase extends RoomDatabase {
      * @return the in-memory app database.
      */
     public static AppDatabase buildInMemory(@NonNull final Context context) {
-        return Room.inMemoryDatabaseBuilder(context.getApplicationContext(), AppDatabase.class)
+        return Room.inMemoryDatabaseBuilder(context, AppDatabase.class)
                 .allowMainThreadQueries()
                 .build();
     }

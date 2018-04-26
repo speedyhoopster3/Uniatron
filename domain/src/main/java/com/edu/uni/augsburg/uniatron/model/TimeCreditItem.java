@@ -39,10 +39,12 @@ public enum TimeCreditItem {
     }
 
     /**
-     * Checks whether this time credit is usable with the specified amount of remaining steps.
+     * Checks whether this time credit is usable with the
+     * specified amount of remaining steps.
      *
      * @param remainingStepCount The remaining step count.
-     * @return <code>true</code> if this time credit is usable, <code>false</code> otherwise.
+     * @return <code>true</code> if this time credit is usable,
+     * <code>false</code> otherwise.
      */
     public boolean isUsable(final int remainingStepCount) {
         return remainingStepCount >= stepCount;

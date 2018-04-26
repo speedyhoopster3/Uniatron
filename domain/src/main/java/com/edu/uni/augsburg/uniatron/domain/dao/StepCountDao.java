@@ -30,8 +30,11 @@ public interface StepCountDao {
     /**
      * Load the step count for a specified date.
      *
+     * @param dateFrom The date to start searching.
+     * @param dateTo The date to end searching.
      * @return The step count.
      */
-    @Query("SELECT SUM(step_count) FROM StepCountEntity WHERE date(timestamp) = date(:date)")
-    LiveData<Integer> loadStepCounts(Date date);
+    @Query("SELECT SUM(step_count) FROM StepCountEntity "
+            + "WHERE timestamp BETWEEN :dateFrom AND :dateTo")
+    LiveData<Integer> loadStepCounts(Date dateFrom, Date dateTo);
 }

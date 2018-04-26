@@ -5,10 +5,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
-import java.util.Date;
-
 import com.edu.uni.augsburg.uniatron.domain.converter.DateConverter;
 import com.edu.uni.augsburg.uniatron.model.StepCount;
+
+import java.util.Date;
 
 /**
  * @author Fabio Hellmann
@@ -18,17 +18,17 @@ import com.edu.uni.augsburg.uniatron.model.StepCount;
 public class StepCountEntity implements StepCount {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private int mId;
+    private long mId;
     @ColumnInfo(name = "timestamp")
     private Date mTimestamp;
     @ColumnInfo(name = "step_count")
     private int mStepCount;
 
-    public int getId() {
+    public long getId() {
         return mId;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.mId = id;
     }
 

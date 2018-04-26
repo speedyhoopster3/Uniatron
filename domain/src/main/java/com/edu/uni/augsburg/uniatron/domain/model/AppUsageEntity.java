@@ -6,10 +6,10 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
-import java.util.Date;
-
 import com.edu.uni.augsburg.uniatron.domain.converter.DateConverter;
 import com.edu.uni.augsburg.uniatron.model.AppUsage;
+
+import java.util.Date;
 
 /**
  * @author Fabio Hellmann
@@ -19,7 +19,7 @@ import com.edu.uni.augsburg.uniatron.model.AppUsage;
 public class AppUsageEntity implements AppUsage {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private int mId;
+    private long mId;
     @ColumnInfo(name = "app_name")
     private String mAppName;
     @ColumnInfo(name = "timestamp")
@@ -27,11 +27,11 @@ public class AppUsageEntity implements AppUsage {
     @ColumnInfo(name = "usage_time_in_seconds")
     private int mUsageTimeInSeconds;
 
-    public int getId() {
+    public long getId() {
         return mId;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.mId = id;
     }
 

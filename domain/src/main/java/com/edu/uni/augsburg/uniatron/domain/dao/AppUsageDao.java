@@ -31,30 +31,32 @@ public interface AppUsageDao {
     /**
      * Load the app usage time of each app summed by the app name.
      *
-     * @param date The date to search for.
+     * @param dateFrom The date to start searching.
+     * @param dateTo The date to end searching.
      * @return The app usage time by app.
      */
     @Query("SELECT 0 id, app_name, date('now') timestamp, "
             + "SUM(usage_time_in_seconds) usage_time_in_seconds "
             + "FROM AppUsageEntity "
-            + "WHERE date(timestamp) = date(:date) "
+            + "WHERE timestamp BETWEEN :dateFrom AND :dateTo "
             + "GROUP BY app_name "
             + "ORDER BY SUM(usage_time_in_seconds) DESC")
-    LiveData<List<AppUsageEntity>> loadAppUsageTime(Date date);
+    LiveData<List<AppUsageEntity>> loadAppUsageTime(Date dateFrom, Date dateTo);
 
     /**
      * Load the app usage in percent of each app summed by the app name.
      *
-     * @param date The date to search for.
+     * @param dateFrom The date to start searching.
+     * @param dateTo The date to end searching.
      * @return The app usage percent by app.
      */
     @Query("SELECT 0 id, app_name, date('now') timestamp, "
-            + "(SUM(usage_time_in_seconds) * 100 / aue1.time) * 100 usage_time_in_seconds "
+            + "(SUM(usage_time_in_seconds) * 100 / aue1.time) usage_time_in_seconds "
             + "FROM AppUsageEntity, "
             + "(SELECT SUM(usage_time_in_seconds) time FROM AppUsageEntity "
-            + "WHERE date(timestamp) = date('now')) aue1 "
-            + "WHERE date(timestamp) = date(:date) "
+            + "WHERE timestamp BETWEEN :dateFrom AND :dateTo) aue1 "
+            + "WHERE timestamp BETWEEN :dateFrom AND :dateTo "
             + "GROUP BY app_name "
             + "ORDER BY SUM(usage_time_in_seconds) DESC")
-    LiveData<List<AppUsageEntity>> loadAppUsagePercent(Date date);
+    LiveData<List<AppUsageEntity>> loadAppUsagePercent(Date dateFrom, Date dateTo);
 }

@@ -18,17 +18,17 @@ import java.util.Date;
 public class TimeCreditEntity implements TimeCredit {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private int mId;
+    private long mId;
     @ColumnInfo(name = "timestamp")
     private Date mTimestamp;
     @ColumnInfo(name = "time_in_minutes")
     private int mTimeInMinutes;
 
-    public int getId() {
+    public long getId() {
         return mId;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.mId = id;
     }
 

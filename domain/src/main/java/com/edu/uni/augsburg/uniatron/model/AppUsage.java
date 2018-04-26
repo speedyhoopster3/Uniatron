@@ -6,7 +6,7 @@ import java.util.Date;
  * @author Fabio Hellmann
  */
 public interface AppUsage {
-    int getId();
+    long getId();
 
     String getAppName();
 

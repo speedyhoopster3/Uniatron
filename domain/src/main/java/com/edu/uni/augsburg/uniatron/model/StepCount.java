@@ -6,7 +6,7 @@ import java.util.Date;
  * @author Fabio Hellmann
  */
 public interface StepCount {
-    int getId();
+    long getId();
 
     Date getTimestamp();
 
