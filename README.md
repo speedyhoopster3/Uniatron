@@ -4,28 +4,28 @@
 
 **Uniatron is the app to spend less time on the phone and more time with exercise!**
 
-At the beginning of a day, each user launches with a set amount of usage time that gradually degrades as apps are used. By achieving activity goals, they can be used to re-enable usage time. Depending on the extent of the activity, a longer or shorter usage time can be unlocked.
+At the beginning of a day, each user launches with a set amount of usage time that gradually degrades as apps are used. By achieving activity goals, they can be used to re-enable usage time. Depending on the extent of the activity, a longer or shorter usage time can be added to your daily limit.
 
-Das automatische Sperren von Apps wird den Nutzer dazu animieren mehr sportlich aktiv zu werden und dem allgemeinem Handy Konsum entgegenwirken.
+Das automatische Sperren von Apps wird den Nutzer dazu animieren sportlich aktiver zu werden, und dem allgemeinen Handykonsum entgegenzuwirken.
 
 ## Features
-- [ ] 1. Lock social/fun apps after a certain amount of usage
+- [ ] 1. Lock social/fun apps after a certain amount of time has been spent
 - [ ] 2. Collect time for doing sportive activity (user can exchange steps for additional screen time)
-- [ ] 3. Tracking emotinons after app usage (via questions/smileys)
-- [ ] 4. Configurable (at which time do the steps reset daily)
-- [ ] 5. Learning aid (locking screen/apps for certain time)
+- [ ] 3. Track emotions after app usage and throughout the day (via questions/smileys)
+- [ ] 4. Configure app settings (user can set the time at which the daily stepcount reset happens)
+- [ ] 5. Aid learning (locking screen/apps for certain amount of time)
 
 ## Schedule
 ### Milestone 1: First prototype (Due date May 31, 2018)
 We will create a first prototype with the basic functionality.
 
-- App locking
-- Collect time for doing sportive activity
-- Emotion tracking
-- Configurations
+- Locking apps
+- Collecting time of doing sportive activity
+- Tracking emotions
+- Configure the app
 
 ### Milestone 2: Final app (Due date June 28, 2018)
-We will further refined the prototype. This may be implemented further functionalities.
+We will further refine the prototype. Thus, additional functionalities might be implemented.
 
 - Learning aid
 
