@@ -7,6 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+/**
+ * The main activity is the entry point of the app.
+ *
+ * @author Fabio Hellmann
+ */
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;

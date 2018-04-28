@@ -1,0 +1,31 @@
+apply plugin: 'com.novoda.static-analysis'
+
+staticAnalysis {
+    penalty failOnErrors
+    checkstyle {
+        toolVersion '8.8'
+        exclude project.fileTree('src/test/java')
+        exclude project.fileTree('src/androidTest/java')
+        configFile rootProject.file('tools/checkstyle.xml')
+        includeVariants { variant -> variant.name.contains('debug') }
+    }
+    pmd {
+        toolVersion '6.1.0'
+        exclude project.fileTree('src/test/java')
+        exclude project.fileTree('src/androidTest/java')
+        ruleSetFiles = rootProject.files('tools/pmd.xml')
+        includeVariants { variant -> variant.name.contains('debug') }
+    }
+    findbugs {
+        toolVersion '3.0.1'
+        exclude project.fileTree('src/test/java')
+        exclude project.fileTree('src/androidTest/java')
+        excludeFilter rootProject.file('tools/findbugs.xml')
+        includeVariants { variant -> variant.name.contains('debug') }
+    }
+    lint { }
+}
+
+afterEvaluate {
+    assembleDebug.dependsOn 'check'
+}
