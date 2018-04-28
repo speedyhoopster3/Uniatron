@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMaxDate;
-import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMinDate;
+import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMinTimeOfDate;
 import static com.edu.uni.augsburg.uniatron.domain.util.TestUtils.getDate;
 import static com.edu.uni.augsburg.uniatron.domain.util.TestUtils.getLiveDataValue;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -72,7 +72,7 @@ public class AppUsageDaoTest {
         mDao.add(create(appName2, date));
 
         final LiveData<List<AppUsageEntity>> data = mDao
-                .loadAppUsageTime(extractMinDate(date), extractMaxDate(date));
+                .loadAppUsageTime(extractMinTimeOfDate(date), extractMaxDate(date));
 
         final List<AppUsageEntity> liveDataValue = getLiveDataValue(data);
         assertThat(liveDataValue, is(notNullValue()));
@@ -97,7 +97,7 @@ public class AppUsageDaoTest {
         mDao.add(create(appName1, date));
 
         final LiveData<List<AppUsageEntity>> data = mDao
-                .loadAppUsagePercent(extractMinDate(date), extractMaxDate(date));
+                .loadAppUsagePercent(extractMinTimeOfDate(date), extractMaxDate(date));
 
         final List<AppUsageEntity> liveDataValue = getLiveDataValue(data);
         assertThat(liveDataValue, is(notNullValue()));

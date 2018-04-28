@@ -14,7 +14,7 @@ import org.junit.Test;
 import java.util.Date;
 
 import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMaxDate;
-import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMinDate;
+import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMinTimeOfDate;
 import static com.edu.uni.augsburg.uniatron.domain.util.TestUtils.getDate;
 import static com.edu.uni.augsburg.uniatron.domain.util.TestUtils.getLiveDataValue;
 import static org.hamcrest.CoreMatchers.is;
@@ -56,7 +56,7 @@ public class StepCountDaoTest {
         mDao.add(create(count, date));
 
         final LiveData<Integer> data = mDao
-                .loadStepCounts(extractMinDate(date), extractMaxDate(date));
+                .loadStepCounts(extractMinTimeOfDate(date), extractMaxDate(date));
 
         final Integer liveDataValue = getLiveDataValue(data);
         assertThat(liveDataValue, is(notNullValue()));

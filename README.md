@@ -6,7 +6,7 @@
 
 At the beginning of a day, each user launches with a set amount of usage time that gradually degrades as apps are used. By achieving activity goals, they can be used to re-enable usage time. Depending on the extent of the activity, a longer or shorter usage time can be added to your daily limit.
 
-Das automatische Sperren von Apps wird den Nutzer dazu animieren sportlich aktiver zu werden, und dem allgemeinen Handykonsum entgegenzuwirken.
+The automatic locking of apps will encourage the user to become more active and to counteract the general use of mobile phones.
 
 ## Features
 - [ ] 1. Lock social/fun apps after a certain amount of time has been spent

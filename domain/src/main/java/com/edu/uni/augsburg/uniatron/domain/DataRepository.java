@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMaxDate;
-import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMinDate;
+import static com.edu.uni.augsburg.uniatron.domain.util.DateUtils.extractMinTimeOfDate;
 
 /**
  * The data repository wraps the database/service interaction.
@@ -68,7 +68,7 @@ public final class DataRepository {
      */
     @NonNull
     public LiveData<Integer> getTimeCreditsByDate(@NonNull final Date date) {
-        final Date dateFrom = extractMinDate(date);
+        final Date dateFrom = extractMinTimeOfDate(date);
         final Date dateTo = extractMaxDate(date);
         return mDatabase.timeCreditDao().loadTimeCredits(dateFrom, dateTo);
     }
@@ -105,7 +105,7 @@ public final class DataRepository {
      */
     @NonNull
     public LiveData<Integer> getStepCountsByDate(@NonNull final Date date) {
-        final Date dateFrom = extractMinDate(date);
+        final Date dateFrom = extractMinTimeOfDate(date);
         final Date dateTo = extractMaxDate(date);
         return mDatabase.stepCountDao().loadStepCounts(dateFrom, dateTo);
     }
@@ -144,7 +144,7 @@ public final class DataRepository {
      */
     @NonNull
     public LiveData<Map<String, Integer>> getAppUsageTimeByDate(@NonNull final Date date) {
-        final Date dateFrom = extractMinDate(date);
+        final Date dateFrom = extractMinTimeOfDate(date);
         final Date dateTo = extractMaxDate(date);
         return Transformations.map(
                 mDatabase.appUsageDao().loadAppUsageTime(dateFrom, dateTo),
@@ -175,7 +175,7 @@ public final class DataRepository {
      */
     @NonNull
     public LiveData<Map<String, Double>> getAppUsagePercentByDate(@NonNull final Date date) {
-        final Date dateFrom = extractMinDate(date);
+        final Date dateFrom = extractMinTimeOfDate(date);
         final Date dateTo = extractMaxDate(date);
         return Transformations.map(
                 mDatabase.appUsageDao().loadAppUsagePercent(dateFrom, dateTo),

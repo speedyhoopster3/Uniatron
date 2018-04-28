@@ -28,7 +28,7 @@ public final class DateUtils {
      * @return The date.
      */
     @NonNull
-    public static Date extractMinDate(@NonNull final Date date) {
+    public static Date extractMinTimeOfDate(@NonNull final Date date) {
         final Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
